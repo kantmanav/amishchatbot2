@@ -391,8 +391,8 @@ public class Magpie4
 
 
     /**
-     * Pick a default response to use if nothing else fits.
-     * @return a non-committal string
+     * Pick a default response to use if nothing else fits
+     * @return a non-committal string related to the Amish lifestyle
      */
     private String getRandomResponse()
     {
