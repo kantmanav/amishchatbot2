@@ -1,3 +1,4 @@
+
 /**
  * A program to carry on conversations with a human user.
  * This version:
@@ -31,13 +32,44 @@ public class Magpie4
     public String getResponse(String statement)
     {
         String response = "";
+        String[ ] basicInputs = {"Hello", "How are you", "Goodbye", "What's wrong", "joke", "jokes", "What's your name", "grass", 
+                                 "love", "darkest secret", "darkest secrets", "sibling", "siblings", "story", "music", "favorite color", 
+                                 "house", "book", "books", "pastime", "F-Word", "pet", "pets", "mustache", "feelings", "friend", 
+                                 "friends", "Go to hell", "construction", "hate"};
+        String[ ] basicOutputs = {"Hello to you too", "Could be better", "Leaving so soon", "Take a guess", 
+                                  "I have a joke: Two Amish people are texting. Wait, no they're not.", 
+                                  "I have a joke: Two Amish people are texting. Wait, no they're not.", "Aaron A Aaronson", 
+                                  "The grasses are my friends.", "There is no love... only duty.",
+                                  "We do not have sinful secrets. We live in an open society.", 
+                                  "We do not have sinful secrets. We live in an open society.", 
+                                  "Ahhhh siblings... Mary, Ann, Mary Ann, Marian, Marion, and Maria provided me with such company in my youth.", 
+                                  "Ahhhh siblings... Mary, Ann, Mary Ann, Marian, Marion, and Maria provided me with such company in my youth.", 
+                                  "I have a story: Once upon a time, someone died.", 
+                                  "Have you ever played selections from the Ausbund? I guess I shouldn't have asked... there aren't any notes.", 
+                                  "Black is my favorite color, although some may like white more.", "I built my house with my own bare hands.", 
+                                  "Books!? What NONSENSE! I only read the Good Book!", "Books!? What NONSENSE! I only read the Good Book!", 
+                                  "I pass the time by working.", "Language!", "PETS?! WHAT USE ARE ANIMALS THAT YOU DON'T MILK OR SLAUGHTER?!", 
+                                  "PETS?! WHAT USE ARE ANIMALS THAT YOU DON'T MILK OR SLAUGHTER?!", 
+                                  "We want nothing to do with those gosh darn mustaches, thank you very much.", "What is a feeling?", 
+                                  "I'm friends with everyone in the world. PSYCHE!!! Just the Amish.", "I'm friends with everyone in the world. PSYCHE!!! Just the Amish.", 
+                                  "That you shall.", "I enjoy construction.", "Why do you feel that way about me?"};
         
+       if (statement.length() == 0)
+       {
+           response = "Where have you gone, friend?";
+           return response;
+       }                          
         
-        if (statement.length() == 0)
-        {
-            response = "Where have you gone, friend?";
-        }
+       for (int index = 0; index < basicInputs.length; index++)
+       {
+           if (findKeyword(statement, basicInputs[index]) >= 0)
+           {
+               response = basicOutputs[index];
+               return response;
+           }
+       }
 
+        /*
         else if (findKeyword(statement, "Hello") >= 0)
         {
             response = "Hello to you too";
@@ -158,11 +190,12 @@ public class Magpie4
         {
             response = "Why do you feel that way about me?";
         }
-
+        */
         // Responses which require transformations
-        else if (findKeyword(statement, "I want to", 0) >= 0)
+        if (findKeyword(statement, "I want to", 0) >= 0)
         {
             response = transformIWantToStatement(statement);
+            return response;
         }
 
         else
@@ -175,14 +208,15 @@ public class Magpie4
                     && findKeyword(statement, "me", psn) >= 0)
             {
                 response = transformYouMeStatement(statement);
+                return response;
             }
             else
             {
                 response = getRandomResponse();
+                return response;
             }
+            
         }
-        
-        return response;
     }
     
     //Parents
