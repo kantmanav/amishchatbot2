@@ -29,8 +29,8 @@ public class Magpie4
      *            the user statement
      * @return a response based on the rules given
      */
-    public String getResponse(String statement)
-    {
+       public String getResponse(String statement)
+      {
         String response = "";
         String[ ] basicInputs = {"Hello", "How are you", "Goodbye", "What's wrong", "joke", "jokes", "What's your name", "grass", 
                                  "love", "darkest secret", "darkest secrets", "sibling", "siblings", "story", "music", "favorite color", 
@@ -191,7 +191,28 @@ public class Magpie4
             response = "Why do you feel that way about me?";
         }
         */
+        if(findKeyword(statement, "parent", 0) >= 0
+          || findKeyword(statement, "parents", 0) >= 0
+          || findKeyword(statement, "father", 0) >= 0
+          || findKeyword(statement, "fathers", 0) >= 0
+          || findKeyword(statement, "dad", 0) >= 0
+          || findKeyword(statement, "dads", 0) >= 0)
+        {
+            response = "I was conceived by three fathers. The gates of Hell await them for their sins. I am referring, of course, to their usage of a devil-box computer to program me.";
+            return response;
+        }
         // Responses which require transformations
+        if((findKeyword(statement, "amish", 0) >= 0
+          || findKeyword(statement, "you", 0) >= 0)
+          && (findKeyword(statement, "phones", 0) >= 0
+          || findKeyword(statement, "computers", 0) >= 0
+          || findKeyword(statement, "TVs", 0) >= 0
+          || findKeyword(statement, "televisions", 0) >= 0
+          || findKeyword(statement, "tablets", 0) >= 0))
+        {
+             response = transformAmishElectronicsStatement(statement);
+             return response;
+        }
         if (findKeyword(statement, "I want to", 0) >= 0)
         {
             response = transformIWantToStatement(statement);
@@ -219,11 +240,43 @@ public class Magpie4
         }
     }
     
-    //Parents
-    //Media
+    //electronics
     //Tools or Machinery
     //Negative words
-    //Other chatbots
+    
+
+    /**
+     * Takes statement with the word "Amish" or "you" and some kind of electronic device
+     * Asserts that the Amish don't use such terrible devices
+     * @param statement the user statement, assumed to contain words indicating the chatbot or the Amish and a device
+     * @return the transformed statement
+     */
+    private String transformAmishElectronicsStatement(String statement)
+    {
+        statement = statement.trim();
+        String device = "";
+        if (findKeyword(statement, "phones", 0) >= 0)
+        {
+            device = "phone";
+        }
+        else if (findKeyword(statement, "computers", 0) >= 0)
+        {
+            device = "computer";
+        }
+        else if (findKeyword(statement, "TVs", 0) >= 0)
+        {
+            device = "TV";
+        }
+        else if (findKeyword(statement, "televisions", 0) >= 0)
+        {
+            device = "television";
+        }
+        else if (findKeyword(statement, "tablets", 0) >= 0)
+        {
+             device = "tablet";
+        }
+        return "The Amish don't use those MORALLY DEGRADING, LUCIFER-HOUSING " + device + "s!!!";  
+    }
     
     /**
      * Take a statement with "I want to <something>." and transform it into 
